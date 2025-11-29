@@ -1,4 +1,6 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'https://sportsync-2.onrender.com/api'
+  : 'http://localhost:5000/api';
 
 
 const getToken = () => {
@@ -55,7 +57,7 @@ export const authAPI = {
 
 
 export const gamesAPI = {
-  
+
 
   getAll: async (filters = {}) => {
     const queryParams = new URLSearchParams();
@@ -67,13 +69,13 @@ export const gamesAPI = {
     return apiRequest(`/games${queryString ? `?${queryString}` : ''}`);
   },
 
-  
+
 
   getMine: async () => {
     return apiRequest('/games/mine');
   },
 
-  
+
 
   create: async (gameData) => {
     return apiRequest('/games', {
@@ -82,7 +84,7 @@ export const gamesAPI = {
     });
   },
 
-  
+
 
   join: async (gameId) => {
     return apiRequest(`/games/${gameId}/join`, {
@@ -90,7 +92,7 @@ export const gamesAPI = {
     });
   },
 
-  
+
 
   leave: async (gameId) => {
     return apiRequest(`/games/${gameId}/leave`, {
@@ -98,7 +100,7 @@ export const gamesAPI = {
     });
   },
 
-  
+
 
   autoJoin: async (preferences = {}) => {
     return apiRequest('/games/auto-join', {
@@ -107,13 +109,13 @@ export const gamesAPI = {
     });
   },
 
-  
+
 
   getPlayers: async (gameId) => {
     return apiRequest(`/games/${gameId}/players`);
   },
 
-  
+
 
   addPlayer: async (gameId, userId) => {
     return apiRequest(`/games/${gameId}/add-player`, {
@@ -122,7 +124,7 @@ export const gamesAPI = {
     });
   },
 
-  
+
 
   kickPlayer: async (gameId, playerId) => {
     return apiRequest(`/games/${gameId}/kick/${playerId}`, {
@@ -130,7 +132,7 @@ export const gamesAPI = {
     });
   },
 
-  
+
 
   getNearby: async (lat, lng, maxDistance = 5000, sport = null) => {
     const queryParams = new URLSearchParams();
@@ -185,7 +187,7 @@ export const walletAPI = {
 
 
 export const turfsAPI = {
-  
+
 
   getNearby: async (lat, lng, maxDistance = 5000) => {
     const queryParams = new URLSearchParams();
@@ -196,7 +198,7 @@ export const turfsAPI = {
     return apiRequest(`/turfs/nearby?${queryParams.toString()}`);
   },
 
-  
+
 
   getAll: async () => {
     return apiRequest('/turfs');
